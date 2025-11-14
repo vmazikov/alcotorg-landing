@@ -122,3 +122,31 @@
     inlineStatus.textContent = "Заявка отправлена. Мы свяжемся с вами.";
     inlineForm.reset();
   });
+
+  // ===== Yandex Map (geo section) =====
+(function initYandexMap() {
+  if (!document.getElementById('geoMap') || !window.ymaps) return;
+
+  ymaps.ready(function () {
+    var map = new ymaps.Map('geoMap', {
+      center: [55.35, 86.087], // примерно центр между городами
+      zoom: 5,
+      controls: ['zoomControl']
+    });
+
+    var points = [
+      { coords: [55.355, 86.087], name: 'Кемерово' },
+      { coords: [55.0415, 82.9346], name: 'Новосибирск' },
+      { coords: [56.4846, 84.9482], name: 'Томск' }
+    ];
+
+    points.forEach(function (p) {
+      var placemark = new ymaps.Placemark(
+        p.coords,
+        { balloonContent: p.name },
+        { preset: 'islands#redDotIcon' }
+      );
+      map.geoObjects.add(placemark);
+    });
+  });
+})();
